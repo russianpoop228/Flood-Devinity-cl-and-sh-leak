@@ -1,7 +1,7 @@
-BuildT   = 270 -- Time to building boats
+BuildT   = 180 -- Time to building boats
 PrepareT = 10  -- Time for getting on boats
 FloodT   = 16  -- Time for water to fill
-FightT   = 280 -- Time to Fight
+FightT   = 180 -- Time to Fight
 ReflectT = 20  -- Time after fight
 
 TeamMembersPerPlayers = 0.15 -- How many max teammembers is based on players. If 1, member limit would be 6 if serverpop was 6. If 0.5, member limit would be 3 if serverpop was 6. This is rounded up.

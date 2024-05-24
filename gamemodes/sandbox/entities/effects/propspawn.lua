@@ -24,8 +24,8 @@ function EFFECT:Init( data )
 	self:SetParent( ent )
 
 	self.OldRenderOverride = self.ParentEntity.RenderOverride
-	self.ParentEntity.RenderOverride = self.RenderParent
 	self.ParentEntity.SpawnEffect = self
+	self.ParentEntity.RenderOverride = self.RenderParent
 
 
 end
@@ -102,9 +102,13 @@ end
 
 function EFFECT:RenderParent()
 
+	if ( !IsValid( self ) ) then return end
+	if ( !IsValid( self.SpawnEffect ) ) then self.RenderOverride = nil return end
+
 	local bClipping = self.SpawnEffect:StartClip( self, 1 )
 
 	self:DrawModel()
+
 	render.PopCustomClipPlane()
 	render.EnableClipping( bClipping )
 
@@ -119,7 +123,7 @@ function EFFECT:StartClip( model, spd )
 	local Bottom = model:GetPos() + mn
 	local Top = model:GetPos() + mx
 
-	local Fraction = (self.LifeTime - CurTime()) / self.Time
+	local Fraction = ( self.LifeTime - CurTime() ) / self.Time
 	Fraction = math.Clamp( Fraction / spd, 0, 1 )
 
 	local Lerped = LerpVector( Fraction, Bottom, Top )

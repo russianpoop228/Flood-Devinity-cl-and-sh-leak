@@ -1,8 +1,9 @@
 
 --
 -- The delay before a tooltip appears
+-- Can be overridden with PANEL:SetTooltipDelay
 --
-local tooltip_delay = CreateClientConVar( "tooltip_delay", "0.5", true, false )
+local tooltip_delay = CreateConVar( "tooltip_delay", "0.5", FCVAR_ARCHIVE + FCVAR_DONTRECORD )
 
 local PANEL = {}
 
@@ -98,15 +99,16 @@ end
 function PANEL:OpenForPanel( panel )
 
 	self.TargetPanel = panel
+	self.OpenDelay = isnumber( panel.numTooltipDelay ) and panel.numTooltipDelay or tooltip_delay:GetFloat()
 	self:PositionTooltip()
 
 	-- Use the parent panel's skin
 	self:SetSkin( panel:GetSkin().Name )
 
-	if ( tooltip_delay:GetFloat() > 0 ) then
+	if ( self.OpenDelay > 0 ) then
 
 		self:SetVisible( false )
-		timer.Simple( tooltip_delay:GetFloat(), function()
+		timer.Simple( self.OpenDelay, function()
 
 			if ( !IsValid( self ) ) then return end
 			if ( !IsValid( panel ) ) then return end
@@ -121,7 +123,7 @@ end
 
 function PANEL:Close()
 
-	if ( !self.DeleteContentsOnClose && IsValid( self.Contents ) ) then
+	if ( !self.DeleteContentsOnClose and IsValid( self.Contents ) ) then
 
 		self.Contents:SetVisible( false )
 		self.Contents:SetParent( nil )

@@ -16,7 +16,7 @@ function PANEL:Init()
 	self.isloading = true
 	self.curply = nil
 
-	self:SetFallbackURL("http://devinity.org/flood/avatar.jpg")
+	self:SetFallbackURL("devinity.org/flood/avatar.jpg")
 end
 
 function PANEL:Paint(w,h)
@@ -52,17 +52,17 @@ end
 function PANEL:SetPlayerSID(sid)
 	self.isloading = true
 
-	local url = string.format("http://devinity.org/steamapi.php?avatar=true&steamid=%s", sid)
+	local url = string.format("devinity.org/steamapi.php?avatar=true&steamid=%s", sid)
 	local function setimg(url)
+		-- print("setting avatar url: " .. url)
 		self.urlset = true
-		self:OpenURL(url)
+		self:OpenURL(url:gsub("https://", ""))
 		self.isloading = false
 	end
 
 	http.Fetch(url,
 	function(html)
 		if not html or (#html < 10) then setimg(self:GetFallbackURL()) return end
-
 		setimg(html)
 	end,
 	function()

@@ -14,6 +14,7 @@ end
 SWEP.Base           = "weapon_bowbase"
 SWEP.PrintName      = "Compound Bow"
 SWEP.HoldType       = "rpg"
+SWEP.WeaponDeploySpeed = 2
 
 SWEP.Slot           = 3
 SWEP.SlotPos        = 4

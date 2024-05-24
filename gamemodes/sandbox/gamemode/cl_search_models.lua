@@ -68,7 +68,7 @@ search.AddProvider( function( str )
 
 		-- Don't search in the models/ and .mdl bit of every model, because every model has this bit, unless they are looking for direct model path
 		local modelpath = v
-		if ( modelpath:StartWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
+		if ( modelpath:StartsWith( "models/" ) && modelpath:EndsWith( ".mdl" ) && !str:EndsWith( ".mdl" ) ) then modelpath = modelpath:sub( 8, modelpath:len() - 4 ) end
 
 		if ( modelpath:find( str, nil, true ) ) then
 
@@ -117,6 +117,7 @@ local function AddSearchProvider( listname, ctype, stype )
 
 		for k, v in pairs( list.Get( listname ) ) do
 			if ( listname == "Weapon" && !v.Spawnable ) then continue end
+
 			v.ClassName = k
 			v.PrintName = v.PrintName or v.Name
 			v.ScriptedEntityType = ctype
@@ -127,9 +128,9 @@ local function AddSearchProvider( listname, ctype, stype )
 
 			local name = v.PrintName
 			local name_c = v.ClassName
-			if ( !name && !name_c ) then continue end
+			if ( !isstring( name ) && !isstring( name_c ) ) then continue end
 
-			if ( ( name && name:lower():find( str, nil, true ) ) || ( name_c && name_c:lower():find( str, nil, true ) ) ) then
+			if ( ( isstring( name ) && name:lower():find( str, nil, true ) ) || ( isstring( name_c ) && name_c:lower():find( str, nil, true ) ) ) then
 
 				local entry = {
 					text = v.PrintName or v.ClassName,

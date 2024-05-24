@@ -27,7 +27,7 @@ timer.Create("ProcessNetInvalidEnts", 0.05, 0, function()
 end)
 
 function net.FMReadEntity(cb)
-	local id = net.ReadUInt(16)
+	local id = net.ReadUInt(13) -- changed from 16 bits in June 2023
 	local e = Entity(id)
 	if IsValid(e) then cb(e) return end
 
