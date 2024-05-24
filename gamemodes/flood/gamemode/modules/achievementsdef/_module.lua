@@ -1,0 +1,1 @@
+DEPENDENCIES["achievements"] = true
