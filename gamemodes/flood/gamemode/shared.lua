@@ -142,15 +142,10 @@ function dp(...)
 	local out = {}
 
 	for _, v in pairs({...}) do
-
 		if istable( v ) then
-
 			out[#out + 1] = "\n" .. ret_PrintTable( v )
-
 		else
-
 			out[#out + 1] = tostring( v )
-
 		end
 	end
 
